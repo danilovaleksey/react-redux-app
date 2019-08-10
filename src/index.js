@@ -10,14 +10,15 @@ import store from './store/configureStore';
 // Router
 import {Router} from "react-router-dom";
 import { createBrowserHistory } from "history";
-const history = createBrowserHistory();
+
+export const history = createBrowserHistory();
 
 ReactDOM.render(
-    <Router history={history}>
-        <Provider store={store}>
+    <Provider store={store}>
+        <Router history={history}>
             <App />
-        </Provider>
-    </Router>,
+        </Router>
+    </Provider>,
     document.getElementById('root')
 );
 

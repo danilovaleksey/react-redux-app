@@ -8,10 +8,13 @@ const instance = axios.create({
 });
 
 export const usersAPI = {
-    getUsers() {
-        return instance.get('users')
+    getUsers(currentPage) {
+        return instance.get(`users?fields=id,first_name,last_name,phone,email,website,_links&page=${currentPage}`)
             .then(res => {
-                return res.data.result;
+                return res.data;
             });
+    },
+    deleteUser(userId) {
+        return instance.delete(`users/${userId}`);
     }
 };

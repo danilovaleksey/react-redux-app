@@ -6,7 +6,7 @@
   width: 100%;
   margin-top: 10px;
 }
-.user_item {
+.item {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -16,7 +16,18 @@
   padding: 20px 0;
   margin-bottom: 10px;
 }
-.user_info {
+.avatar {
+  display: flex;
+  justify-content: center;
+  flex: 2;
+  img {
+    width: 120px;
+    height: 120px;
+    margin: 5px;
+    border-radius: 150px;
+  }
+}
+.info {
   flex: 5;
   display: flex;
   flex-direction: column;
@@ -25,38 +36,24 @@
     margin-top: 10px;
   }
 }
-.user_avatar {
-  display: flex;
-  justify-content: center;
-  flex: 2;
-
-  img {
-    width: 120px;
-    height: 120px;
-    margin: 5px;
-    border-radius: 150px;
-  }
-}
-.user_buttons {
+.buttons {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-.user_edit_button {
-  font-size: 20px;
-  margin-bottom: 10px;
-
-  &:hover {
-    color: #2db7f5;
+  &__edit {
+    font-size: 20px;
+    margin-bottom: 10px;
+    &:hover {
+      color: #2db7f5;
+    }
   }
-}
-.user_delete_button {
-  font-size: 20px;
-
-  &:hover {
-    color: #2db7f5;
+  &__delete {
+    font-size: 20px;
+    &:hover {
+      color: #2db7f5;
+    }
   }
 }
 
