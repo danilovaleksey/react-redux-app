@@ -3,7 +3,7 @@ import {
     DELETE_USER,
 } from "../types/users";
 import {usersAPI} from "../../api/api";
-import {history} from '../../index';
+import history from "../../history";
 
 // ACTIONS
 const setUsers = (users, currentPage, totalCount, perPage) => ({
