@@ -2,7 +2,6 @@ import React from 'react';
 import './App.scss';
 import {Route} from "react-router-dom";
 
-// Containers
 import UsersListContainer from "./components/UsersList/UsersListContainer";
 
 

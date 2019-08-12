@@ -1,14 +1,18 @@
 import {
     GET_USERS,
+    SET_PAGINATION,
     DELETE_USER,
 } from "../types/users";
 import {usersAPI} from "../../api/api";
 import history from "../../history";
 
 // ACTIONS
-const setUsers = (users, currentPage, totalCount, perPage) => ({
+const setUsers = (users) => ({
     type: GET_USERS,
-    users,
+    users
+});
+const setPagination = (currentPage, totalCount, perPage) => ({
+    type: SET_PAGINATION,
     currentPage,
     totalCount,
     perPage
@@ -20,12 +24,21 @@ const getUsers = (currentPage) => {
     return (dispatch) => {
         usersAPI.getUsers(currentPage).then(data => {
             const {totalCount, perPage} = data._meta;
-            history.push(`/page/${currentPage}`);
-            dispatch(setUsers(data.result, currentPage, totalCount, perPage));
+            dispatch(setPagination(currentPage, totalCount, perPage));
+            dispatch(setUsers(data.result));
         });
     }
 };
-const deleteUserThunk = (userId) => {
+const changeUrl = (currentPage) => {
+    return (dispatch) => {
+        if (currentPage === 1) {
+            history.push('/');
+        } else {
+            history.push(`/page/${currentPage}`);
+        }
+    }
+};
+const deleteUser = (userId) => {
     return (dispatch) => {
         usersAPI.deleteUser(userId).then(res => {
             if(res.status === 200) {
@@ -37,5 +50,6 @@ const deleteUserThunk = (userId) => {
 
 export {
     getUsers,
-    deleteUserThunk,
+    deleteUser,
+    changeUrl,
 };

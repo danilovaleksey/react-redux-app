@@ -3,11 +3,9 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-// Redux
 import { Provider } from "react-redux";
 import store from './store/configureStore';
 
-// Router
 import {Router} from "react-router-dom";
 import history from "./history";
 

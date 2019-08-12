@@ -1,5 +1,6 @@
 import {
     GET_USERS,
+    SET_PAGINATION,
     DELETE_USER,
 } from '../types/users';
 
@@ -15,7 +16,11 @@ export function UsersList (state = initialState, action) {
         case GET_USERS:
             return {
                 ...state,
-                users: action.users,
+                users: action.users
+            };
+        case SET_PAGINATION:
+            return {
+                ...state,
                 currentPage: action.currentPage,
                 totalCount: action.totalCount,
                 perPage: action.perPage

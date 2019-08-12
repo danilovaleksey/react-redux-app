@@ -4,10 +4,15 @@ import Pagination from "rc-pagination";
 import 'rc-pagination/assets/index.css';
 import s from './UsersList.module.scss';
 
-
 export const UsersList = (props) => {
-    const {users, currentPage, totalCount, perPage} = props;
-    const {deleteUser, onSetCurrentPage} = props;
+    const {
+        onSetCurrentPage,
+        deleteUser,
+        users,
+        currentPage,
+        totalCount,
+        perPage
+    } = props;
     return (
         <section className={s.users}>
             <Pagination
@@ -18,7 +23,7 @@ export const UsersList = (props) => {
                 total={totalCount}
                 pageSize={perPage}
             />
-            {users.map((user) => (
+            { users.map((user) => (
                 <div className={s.item} key={user.id}>
                     <div className={s.avatar}>
                         <img src={user._links.avatar.href} alt="avatar" />
@@ -53,19 +58,18 @@ export const UsersList = (props) => {
 };
 
 UsersList.propTypes = {
-    users: PropTypes.array.isRequired,
-    deleteUser: PropTypes.func,
     onSetCurrentPage: PropTypes.func,
+    deleteUser: PropTypes.func,
+    users: PropTypes.array.isRequired,
     currentPage: PropTypes.number,
     totalCount: PropTypes.number,
     perPage: PropTypes.number,
 };
 UsersList.defaultProps = {
-    users: [],
     deleteUser: ()=> {},
     onSetCurrentPage: ()=> {},
+    users: [],
     currentPage: 1,
     totalCount: 100,
     perPage: 20,
-
 };
