@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {compose} from 'redux';
 import { withRouter } from "react-router";
+import {Redirect} from "react-router-dom";
 import {
     getUsers,
     changeUrl,
@@ -13,6 +14,9 @@ import {UsersList} from "./UsersList";
 
 
 class UsersListContainer extends React.Component {
+    state = {
+        redirect: false,
+    }
     static propTypes = {
         getUsers: PropTypes.func.isRequired,
         changeUrl: PropTypes.func.isRequired,
@@ -32,17 +36,23 @@ class UsersListContainer extends React.Component {
         perPage: 20,
     };
     componentDidMount() {
-        const {page} = this.props.match.params;
-        const {getUsers, currentPage} = this.props;
+        const { page } = this.props.match.params;
+        const { getUsers, currentPage } = this.props;
         if (page !== undefined) {
-            getUsers(Number(page));
+            if (currentPage ===  1) {
+                getUsers(Number(page));
+            }
         } else {
-            getUsers(currentPage);
+            getUsers(1);
         }
     }
     onSetCurrentPage = (page) => {
-        this.props.changeUrl(page);
-        this.props.getUsers(page);
+        if (page === 1) {
+            this.setState({redirect: true});
+        } else {
+            this.props.changeUrl(page);
+            this.props.getUsers(page);
+        }
     };
     render() {
         const {
@@ -52,6 +62,11 @@ class UsersListContainer extends React.Component {
             perPage,
             deleteUser,
         } = this.props;
+
+        if (this.state.redirect) {
+            return <Redirect to={'/'} />
+        }
+
         return (
             <>
                 <UsersList
