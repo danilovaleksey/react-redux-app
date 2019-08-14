@@ -10,30 +10,30 @@ import {
     deleteUser,
 } from "../../store/actions/users";
 
-import {UsersList} from "./UsersList";
+import {UsersList} from "./ui/UsersList";
 
 
 class UsersListContainer extends React.Component {
     state = {
         redirect: false,
-    }
+    };
     static propTypes = {
-        getUsers: PropTypes.func.isRequired,
-        changeUrl: PropTypes.func.isRequired,
-        deleteUser: PropTypes.func,
         users: PropTypes.array.isRequired,
         currentPage: PropTypes.number,
         totalCount: PropTypes.number,
         perPage: PropTypes.number,
+        getUsers: PropTypes.func.isRequired,
+        changeUrl: PropTypes.func.isRequired,
+        deleteUser: PropTypes.func,
     };
     static defaultProps = {
-        getUsers: ()=>{},
-        changeUrl: ()=>{},
-        deleteUser: ()=>{},
         users: [],
         currentPage: 1,
         totalCount: 100,
         perPage: 20,
+        getUsers: ()=>{},
+        changeUrl: ()=>{},
+        deleteUser: ()=>{},
     };
     componentDidMount() {
         const { page } = this.props.match.params;
@@ -47,11 +47,12 @@ class UsersListContainer extends React.Component {
         }
     }
     onSetCurrentPage = (page) => {
+        const {changeUrl, getUsers} = this.props;
         if (page === 1) {
             this.setState({redirect: true});
         } else {
-            this.props.changeUrl(page);
-            this.props.getUsers(page);
+            changeUrl(page);
+            getUsers(page);
         }
     };
     render() {
@@ -68,7 +69,6 @@ class UsersListContainer extends React.Component {
         }
 
         return (
-            <>
                 <UsersList
                     users={users}
                     currentPage={currentPage}
@@ -77,7 +77,6 @@ class UsersListContainer extends React.Component {
                     deleteUser={deleteUser}
                     onSetCurrentPage={this.onSetCurrentPage}
                 />
-            </>
         );
     }
 }

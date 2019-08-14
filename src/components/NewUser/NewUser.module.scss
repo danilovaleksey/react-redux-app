@@ -1,0 +1,77 @@
+$green: rgb(56, 172, 56);
+$red: rgb(197, 77, 68);
+$white: rgb(255, 255, 255);
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+.formGroup {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.textInput {
+  width: 250px;
+  height: 25px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid rgb(182, 181, 181);
+}
+.textArea {
+  width: 250px;
+  height: 80px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid rgb(182, 181, 181);
+  resize: none;
+  wrap: wrap;
+}
+.isInvalid {
+  border-color: $red;
+}
+.formButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.saveButton {
+  border-radius: 20px;
+  width: 80px;
+  height: 30px;
+  margin: 10px;
+  font-weight: 600;
+  border-color: $green;
+  color: $green;
+  &:hover {
+    background-color: $green;
+    color:$white;
+  }
+}
+.closeButton {
+  border-radius: 20px;
+  width: 80px;
+  height: 30px;
+  margin: 10px;
+  font-weight: 600;
+  border-color: $red;
+  color: $red;
+  &:hover {
+    background-color: $red;
+    color: $white;
+  }
+}

@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Pagination from "rc-pagination";
 import 'rc-pagination/assets/index.css';
-import s from './UsersList.module.scss';
+import styles from './UsersList.module.scss';
+import {NavLink} from "react-router-dom";
 
 export const UsersList = (props) => {
     const {
@@ -14,7 +15,10 @@ export const UsersList = (props) => {
         perPage
     } = props;
     return (
-        <section className={s.users}>
+        <section className={styles.users}>
+            <NavLink to="/users/new" className={styles.newUser}>
+                New User
+            </NavLink>
             <Pagination
                 onChange={(currentPage) => {
                     onSetCurrentPage(currentPage);
@@ -24,28 +28,22 @@ export const UsersList = (props) => {
                 pageSize={perPage}
             />
             { users.map((user) => (
-                <div className={s.item} key={user.id}>
-                    <div className={s.avatar}>
+                <div className={styles.item} key={user.id}>
+                    <div className={styles.avatar}>
                         <img src={user._links.avatar.href} alt="avatar" />
                     </div>
-                    <div className={s.info}>
+                    <div className={styles.info}>
                         <p><b>Name: </b>{' ' + user.first_name + ' ' + user.last_name}</p>
                         <p><b>Phone: </b>{user.phone}</p>
                         <p><b>Mail: </b>{user.email}</p>
                         <p><b>Website: </b>{user.website}</p>
                     </div>
-                    <div className={s.buttons}>
-                        <div
-                            className={s.buttons__edit}
-                            onClick={ () =>{}}
-                        >
-                            <i className="fas fa-cog"/>
-                        </div>
+                    <div className={styles.buttons}>
                         <div
                             onClick={() => {
                                 deleteUser(user.id);
                             }}
-                            className={s.buttons__delete}
+                            className={styles.buttons__delete}
                         >
                             <i className="fas fa-trash-alt"/>
                         </div>

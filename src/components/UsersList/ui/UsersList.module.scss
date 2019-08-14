@@ -1,0 +1,69 @@
+.newUser {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 30px;
+  border-radius: 20px;
+  text-decoration: none;
+  background-color: #2db7f5;
+  color: white;
+  margin: 15px;
+  border: 1px solid #2db7f5;
+  &:hover {
+    border: 1px solid #2db7f5;
+    background-color: white;
+    color: #2db7f5;
+  }
+}
+.users {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+}
+.item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 700px;
+  border: 1px solid rgb(199, 199, 199);
+  border-radius: 10px;
+  padding: 20px 0;
+  margin-bottom: 10px;
+}
+.avatar {
+  display: flex;
+  justify-content: center;
+  flex: 2;
+  img {
+    width: 120px;
+    height: 120px;
+    margin: 5px;
+    border-radius: 150px;
+  }
+}
+.info {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+
+  p {
+    margin-top: 10px;
+  }
+}
+.buttons {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &__delete {
+    font-size: 20px;
+    &:hover {
+      color: #2db7f5;
+    }
+  }
+}
