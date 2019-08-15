@@ -1,6 +1,4 @@
-$green: rgb(56, 172, 56);
-$red: rgb(197, 77, 68);
-$white: rgb(255, 255, 255);
+@import '../../components/variables';
 
 .wrapper {
   display: flex;
@@ -41,8 +39,21 @@ $white: rgb(255, 255, 255);
   resize: none;
   wrap: wrap;
 }
+.select {
+  width: 255px;
+  height: 30px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid rgb(182, 181, 181);
+  background-color: $globalWhite;
+
+}
 .isInvalid {
   border-color: $red;
+}
+.invalidFeedback {
+  color: $red;
+  margin-top: 5px;
 }
 .formButtons {
   display: flex;
@@ -59,7 +70,7 @@ $white: rgb(255, 255, 255);
   color: $green;
   &:hover {
     background-color: $green;
-    color:$white;
+    color: $globalWhite
   }
 }
 .closeButton {
@@ -72,6 +83,13 @@ $white: rgb(255, 255, 255);
   color: $red;
   &:hover {
     background-color: $red;
-    color: $white;
+    color: $globalWhite
   }
+}
+.preloadPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
 }

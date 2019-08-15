@@ -1,19 +1,31 @@
 import React from 'react';
-import styles from './NewUser.module.scss';
-import {Formik, Form, Field, ErrorMessage} from 'formik';
-import {connect} from "react-redux";
-import * as Yup from 'yup';
+import PropTypes from "prop-types";
 import cx from 'classnames';
+import styles from './NewUser.module.scss';
+import preloader from './img/preloader.gif';
+import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
+import {Formik, Form, Field, ErrorMessage} from 'formik';
+import * as Yup from 'yup';
 import MaskedInput from 'react-text-mask';
+import {
+    createNewUser
+} from '../../store/actions/users'
+
 
 class NewUser extends React.Component {
+    static propTypes = {
+        preloader: PropTypes.bool,
+    };
+    static defaultProps = {
+        preloader: false,
+    };
     state = {
         redirect: false
     };
     onClickSave = (fields) => {
-        console.log(fields);
-        this.setState({redirect: true});
+        const {createNewUser} = this.props;
+        createNewUser(fields);
     };
     onClickClose = (e) => {
         e.preventDefault();
@@ -25,21 +37,27 @@ class NewUser extends React.Component {
         if (this.state.redirect) {
             return <Redirect to={'/'} />
         }
+        if (this.props.preloader) {
+            return  <div className={styles.preloadPage}>
+                <img src={preloader} alt={'preloader'}/>
+            </div>
+        }
         return (
             <Formik
                 initialValues={{
-                    firstName: "",
-                    lastName: "",
+                    first_name: "",
+                    last_name: "",
                     phone: "",
                     email: "",
-                    website: ""
+                    website: "",
+                    gender: "male"
                 }}
                 validationSchema={Yup.object().shape({
-                    firstName: Yup
+                    first_name: Yup
                         .string()
                         .min(3, 'Minimal 3 characters')
                         .required('First Name is required'),
-                    lastName: Yup
+                    last_name: Yup
                         .string()
                         .min(3, 'Minimal 3 characters')
                         .required('Last Name is required'),
@@ -53,7 +71,7 @@ class NewUser extends React.Component {
                         .required('Email is required'),
                     website: Yup
                         .string()
-                        .min(9, 'Minimal 10 characters')
+                        .url()
                         .required('Website  is required')
                 })}
                 onSubmit={fields => {
@@ -64,33 +82,46 @@ class NewUser extends React.Component {
                         <h3>New User</h3>
                         <Form className={styles.form}>
                             <div className={styles.formGroup}>
-                                <label className={styles.label} htmlFor='firstName'>First Name</label>
+                                <label className={styles.label} htmlFor='first_name'>First Name</label>
                                 <Field
                                     type="text"
-                                    id='firstName'
-                                    name='firstName'
+                                    id='first_name'
+                                    name='first_name'
                                     placeholder='First Name'
                                     className={cx(
                                         styles.textInput,
-                                        errors.firstName && touched.firstName ?  styles.isInvalid : null
+                                        errors.first_name && touched.first_name ?  styles.isInvalid : null
                                     )}
                                 />
-                                <ErrorMessage name="firstName" component="div" className="invalid-feedback" />
+                                <ErrorMessage name="first_name" component="div" className={styles.invalidFeedback} />
                             </div>
                             <div className={styles.formGroup}>
-                                <label className={styles.label} htmlFor='lastName'>Last Name</label>
+                                <label className={styles.label} htmlFor='last_name'>Last Name</label>
                             <Field
                                     type="text"
-                                    id='lastName'
-                                    name='lastName'
+                                    id='last_name'
+                                    name='last_name'
                                     placeholder='Last Name'
                                     className={cx(
                                         styles.textInput,
-                                        errors.lastName && touched.lastName ?  styles.isInvalid : null
+                                        errors.last_name && touched.last_name ?  styles.isInvalid : null
                                     )}
                                 />
-                                <ErrorMessage name="lastName" component="div" className="invalid-feedback" />
+                                <ErrorMessage name="last_name" component="div" className={styles.invalidFeedback}/>
                             </div>
+                            <div className={styles.formGroup}>
+                                <label className={styles.label} htmlFor='gender'>Gender</label>
+                                <Field component="select"
+                                       name="gender"
+                                       id='gender'
+                                       className={styles.select}
+                                >
+                                    <option value="male">male</option>
+                                    <option value="female">female</option>
+                                </Field>
+                                <ErrorMessage name="gender" component="div" className={styles.invalidFeedback} />
+                            </div>
+
                             <div className={styles.formGroup}>
                                 <label className={styles.label} htmlFor='phone'>Phone</label>
                                 <Field
@@ -105,7 +136,7 @@ class NewUser extends React.Component {
                                                             errors.phone && touched.phone ?  styles.isInvalid : null
                                                         )}/>
                                 }} />
-                                <ErrorMessage name="phone" component="div" className="invalid-feedback" />
+                                <ErrorMessage name="phone" component="div" className={styles.invalidFeedback} />
                             </div>
                             <div className={styles.formGroup}>
                                 <label className={styles.label} htmlFor='email'>E-mail</label>
@@ -119,7 +150,7 @@ class NewUser extends React.Component {
                                         errors.email && touched.email ?  styles.isInvalid : null
                                     )}
                                 />
-                                <ErrorMessage name="email" component="div" className="invalid-feedback" />
+                                <ErrorMessage name="email" component="div" className={styles.invalidFeedback} />
                             </div>
                             <div className={styles.formGroup}>
                                 <label className={styles.label} htmlFor='website'>Website</label>
@@ -134,7 +165,7 @@ class NewUser extends React.Component {
                                         errors.website && touched.website ?  styles.isInvalid : null
                                     )}
                                 />
-                                <ErrorMessage name="website" component="div" className="invalid-feedback" />
+                                <ErrorMessage name="website" component="div" className={styles.invalidFeedback} />
                             </div>
                             <div className={styles.formButtons}>
                                 <button
@@ -151,10 +182,10 @@ class NewUser extends React.Component {
                     </div>
                 )}
             />
-)}};
+)}}
 const mapStateToProps = (state) => {
     return {
-
+        preloader: state.UsersList.preloader,
     }
 };
-export default connect(mapStateToProps,{})(NewUser);
+export default connect(mapStateToProps,{createNewUser})(NewUser);

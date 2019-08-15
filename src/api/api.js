@@ -14,6 +14,12 @@ export const usersAPI = {
                 return res.data;
             });
     },
+    createNewUser(user) {
+        return instance.post('users', user)
+            .then(res => {
+                return res;
+            });
+    },
     deleteUser(userId) {
         return instance.delete(`users/${userId}`);
     }

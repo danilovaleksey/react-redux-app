@@ -2,6 +2,7 @@ import {
     GET_USERS,
     SET_PAGINATION,
     DELETE_USER,
+    CHANGE_PRELOADER,
 } from '../types/users';
 
 let initialState = {
@@ -9,6 +10,7 @@ let initialState = {
     currentPage: 1,
     totalCount: 100,
     perPage: 20,
+    preloader: false,
 };
 
 export function UsersList (state = initialState, action) {
@@ -29,6 +31,11 @@ export function UsersList (state = initialState, action) {
             return {
                 ...state,
                 users: state.users.filter(item => !(item.id === action.userID)),
+            };
+        case CHANGE_PRELOADER:
+            return {
+                ...state,
+                preloader: !state.preloader
             };
         default:
             return state;

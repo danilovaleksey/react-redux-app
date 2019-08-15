@@ -2,6 +2,7 @@ import {
     GET_USERS,
     SET_PAGINATION,
     DELETE_USER,
+    CHANGE_PRELOADER,
 } from "../types/users";
 import {usersAPI} from "../../api/api";
 import history from "../../history";
@@ -18,19 +19,31 @@ const setPagination = (currentPage, totalCount, perPage) => ({
     perPage
 });
 const deleteUserAction = (userID) => ({type: DELETE_USER, userID});
+const changePreloader = () => ({type: CHANGE_PRELOADER});
 
 // THUNK FUNCTIONS
 const getUsers = (currentPage) => {
     return (dispatch) => {
-        usersAPI.getUsers(currentPage).then(data => {
-            const {totalCount, perPage} = data._meta;
-            dispatch(setPagination(currentPage, totalCount, perPage));
-            dispatch(setUsers(data.result));
-        });
+        usersAPI.getUsers(currentPage)
+            .then(data => {
+                const {totalCount, perPage} = data._meta;
+                dispatch(setPagination(currentPage, totalCount, perPage));
+                dispatch(setUsers(data.result));
+            });
+    }
+};
+const createNewUser = (user) => {
+    return (dispatch) => {
+        dispatch(changePreloader());
+        usersAPI.createNewUser(user)
+            .then(() => {
+                dispatch(changePreloader());
+                history.push('/');
+            });
     }
 };
 const changeUrl = (currentPage) => {
-    return (dispatch) => {
+    return () => {
         if (currentPage === 1) {
             history.push('/');
         } else {
@@ -50,6 +63,7 @@ const deleteUser = (userId) => {
 
 export {
     getUsers,
+    createNewUser,
     deleteUser,
     changeUrl,
 };
